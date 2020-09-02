@@ -146,14 +146,17 @@ public class Stack<Item> implements Iterable<Item> {
 
     /**
      * Unit tests the {@code Stack} data type.
+     * Modified by William Asp
      *
      * @param args the command-line arguments
+     *
+     *
      */
     public static void main(String[] args) {
         Stack<String> stack = new Stack<String>();
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
-            String item = sc.next();    //StdIn.readString();
+            String item = sc.next();
             if (!item.equals("-"))
                 stack.push(item);
             else if (!stack.isEmpty())
