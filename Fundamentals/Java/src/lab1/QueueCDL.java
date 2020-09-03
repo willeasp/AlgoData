@@ -1,7 +1,10 @@
 package lab1;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class QueueCDL<Item> implements Iterable<Item>{
     private Node first; // first element in queue
@@ -81,49 +84,115 @@ public class QueueCDL<Item> implements Iterable<Item>{
         return item;
     }
 
+    /**
+     * Print the contents of the queue
+     */
     private void printContents() {
-        for(Item item : this) {
-            System.out.println(item);
+        StringBuilder sb = new StringBuilder(); // use a stringbuilder
+        sb.append("Queue:");                   // make clear that the printout is for the queue
+        for(Item item : this) {                 // use the iterator
+            sb.append("  " + item);             // append each item
         }
+        System.out.println(sb.toString());      // print to stdout
     }
 
+    /**
+     * Creates an Iterator object
+     * @return The iterator for the queue
+     */
     @Override
     public Iterator<Item> iterator() {
         return new QueueIterator(first);
     }
 
+    /**
+     * The iterator for this class.
+     */
     private class QueueIterator implements Iterator<Item> {
-        private Node current;
+        private Node current;                   // holds the place in the queue
 
-        public QueueIterator (Node first) {
+        public QueueIterator (Node first) {     // constructor
             current = first;
         }
 
         @Override
         public boolean hasNext() {
-            return current.next != first;
+            if (current == null) {              // if current is set to null, there are no more elements
+               return false;
+            }
+            return true;
         }
 
         @Override
-        public Item next() {
+        public Item next() {                    // move to next item in queue
             Item item = current.item;
-            current = current.next;
-            return item;
+            if (current.next == first)          // if the element after this is first, set current to null
+                current = null;
+            else
+                current = current.next;         // move to next element
+            return item;                        // return current iterations element.
         }
     }
 
+    /**
+     * Main function. Write the name if the item you want to add to the queue, or write "-" to dequeue an item. Write exit to exit.
+     * To run test add -t to program arguments.
+     * @param args
+     */
     public static void main (String[] args) {
         QueueCDL<String> q = new QueueCDL();
-        q.enqueue("Hello");
-        q.enqueue("Bitch");
-        q.enqueue("How");
-        q.enqueue("Are");
-        q.enqueue("You");
-        System.out.println(q.dequeue() + " " + q.size());
-        System.out.println(q.dequeue() + " " + q.size());
-        System.out.println(q.dequeue() + " " + q.size());
-        System.out.println(q.dequeue() + " " + q.size());
-        System.out.println(q.dequeue() + " " + q.size());
-        System.out.println(q.dequeue() + " " + q.size());
+        if (args.length > 0){
+            if (args[0].equals("-t")) {
+                // test
+                System.out.println("TESTING...");
+
+                // set up expected
+                String expected = "Queue:  ONE  TWO  THREE  FOUR  FIVE\r\n";
+
+                // set stdout to write to outputstream
+                ByteArrayOutputStream output = new ByteArrayOutputStream();
+                PrintStream oldOut = System.out;
+                System.setOut(new PrintStream(output));
+
+                // add to queue
+                q.enqueue("ONE");
+                q.enqueue("TWO");
+                q.enqueue("THREE");
+                q.enqueue("FOUR");
+
+                // reset output for test
+                output.reset();
+
+                // perform last test, write FIVE to queue
+                q.enqueue("FIVE");
+
+                // check result
+                String result = output.toString();
+                System.setOut(oldOut);
+                if (result.equals(expected)) {
+                    System.out.println("Test successful.");
+                } else {
+                    System.out.println("Test failed.\n" +
+                            "Expected: \"" + expected + "\"\n" +
+                            "Got:      \"" + result + "\"");
+                    System.out.println("Difference: " + result.compareTo(expected));
+                }
+            }
+        } else {
+            System.out.println("Enter an item you want to add by simply typing it. \n" +
+                    "Write \"-\" to dequeue an item.\n" +
+                    "Write \"exit\" to exit.");
+            Scanner sc = new Scanner(System.in);
+            String input = null;
+            while (true) {
+                input = sc.next();
+                if (input.equals("-"))
+                    q.dequeue();
+                else if (input.equals("exit"))
+                    break;
+                else
+                    q.enqueue(input);
+            }
+        }
     }
 }
