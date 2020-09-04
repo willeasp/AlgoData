@@ -1,3 +1,27 @@
+/*
+* Author: William Asp
+* September 3, 2020
+*
+* QueueCircularDoubleLinked:
+* A generic iterable FIFO-queue based on a double linked circular list.
+*
+* **How it is used**
+*   - When executing the main program, you will be able to type in the
+*     word that you want to put in the queue, and press enter. When you
+*     want to take out the first element in the queue, you can type "-".
+*     Each time you enqueue or dequeue, the entire contents of the queue
+*     will be printed to the console. When you want to exit the program
+*     simply type "exit".
+* **Testing**
+*   - To run the test, simply add "-t" as an argument to the program.
+*
+* The program has taken inspiration from the page "Doubly Circular Linked List"
+* on the website GeeksforGeeks.org: https://www.geeksforgeeks.org/doubly-circular-linked-list-set-1-introduction-and-insertion/
+*
+*
+*
+* */
+
 package lab1;
 
 import java.io.ByteArrayOutputStream;
@@ -146,8 +170,9 @@ public class QueueCDL<Item> implements Iterable<Item>{
                 // test
                 System.out.println("TESTING...");
 
-                // set up expected
-                String expected = "Queue:  ONE  TWO  THREE  FOUR  FIVE\r\n";
+                // set up expected1
+                String expected1 = "Queue:  ONE  TWO  THREE  FOUR  FIVE\r\n";
+                String expected2 = "Queue:  TWO  THREE  FOUR  FIVE\r\n";
 
                 // set stdout to write to outputstream
                 ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -167,16 +192,50 @@ public class QueueCDL<Item> implements Iterable<Item>{
                 q.enqueue("FIVE");
 
                 // check result
-                String result = output.toString();
+                String result1 = output.toString();
                 System.setOut(oldOut);
-                if (result.equals(expected)) {
-                    System.out.println("Test successful.");
-                } else {
+                if (!(result1.equals(expected1))) {
                     System.out.println("Test failed.\n" +
-                            "Expected: \"" + expected + "\"\n" +
-                            "Got:      \"" + result + "\"");
-                    System.out.println("Difference: " + result.compareTo(expected));
+                            "Expected: \"" + expected1 + "\"\n" +
+                            "Got:      \"" + result1 + "\"");
+                    System.out.println("Difference: " + result1.compareTo(expected1));
+                    System.exit(0);
                 }
+
+                // check size
+                if (q.size() != 5) {
+                    System.out.println("Wrong size.\n" +
+                            "Expected: " + 5 + "\n" +
+                            "Got:      " + q.size());
+                    System.exit(0);
+                }
+
+                // do next test
+                output.reset();
+                System.setOut(new PrintStream(output));
+
+                // run test
+                q.dequeue();
+
+                // check result
+                String result2 = output.toString();
+                System.setOut(oldOut);
+                if (!(result1.equals(expected1))) {
+                    System.out.println("Test failed.\n" +
+                            "Expected: \"" + expected1 + "\"\n" +
+                            "Got:      \"" + result2 + "\"");
+                    System.out.println("Difference: " + result2.compareTo(expected1));
+                    System.exit(0);
+                }
+
+                // check size
+                if (q.size() != 4) {
+                    System.out.println("Wrong size.\n" +
+                            "Expected: " + 4 + "\n" +
+                            "Got:      " + q.size());
+                    System.exit(0);
+                }
+                System.out.println("Test successful.");
             }
         } else {
             System.out.println("Enter an item you want to add by simply typing it. \n" +
