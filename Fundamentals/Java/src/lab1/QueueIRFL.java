@@ -126,16 +126,19 @@ public class QueueIRFL<Item> implements Iterable<Item> {
 
     /**
      * Take away the first element in the queue
+     * @return The item removed.
      */
-    public void removeFirst() {
-        dequeue();
+    public Item removeFirst() {
+        return dequeue();
     }
 
     /**
      * Take away the last element in the queue
+     * @return The item removed
      */
-    public void removeLast() {
+    public Item removeLast() {
         if (size() == 0) throw new NoSuchElementException("Queue is empty");
+        Item item = last.item;
         if (first == last) {
             first = null;
             last = null;
@@ -149,6 +152,7 @@ public class QueueIRFL<Item> implements Iterable<Item> {
         }
         decreaseSize();
         printContents();
+        return item;
     }
 
     /**
