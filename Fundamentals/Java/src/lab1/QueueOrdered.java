@@ -36,7 +36,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-public class QueueOrdered implements Iterable<Integer> {
+public class QueueOrdered<Item extends Comparable> implements Iterable<Item> {
     private Node first;         // first element in queue
     private Node last;          // last element in queue
     private int n;              // # of items in queue
@@ -45,7 +45,7 @@ public class QueueOrdered implements Iterable<Integer> {
      * Holds each element and points to the next node
      */
     private class Node {
-        private int item;
+        private Item item;
         private Node next;
     }
 
@@ -77,13 +77,13 @@ public class QueueOrdered implements Iterable<Integer> {
      * Put the added element in the correct place in the queue.
      * @param item The item to place
      */
-    private void sortIn (int item) {
+    private void sortIn (Item item) {
         // sortIn places item in the correct place by checking every element before it if it is bigger.
         // When the element after is bigger, item is placed before it.
         Node newNode = new Node();                  // create the new Node
         newNode.item = item;                        // store information
         Node current = first;                       // current = iterator node
-        if (first.item > newNode.item) {            // if new element is to be placed first
+        if (first.item.compareTo(newNode.item) > 0) {            // if new element is to be placed first
             newNode.next = first;
             first = newNode;
         } else if (first.next == null){             // if new element is to be placed second
@@ -92,7 +92,7 @@ public class QueueOrdered implements Iterable<Integer> {
         }
         else {
             boolean lastPlace = false;                  // boolean if the new element is placed last
-            while (current.next.item < newNode.item) {  // move iterator to the position before the element bigger than newNode
+            while (current.next.item.compareTo(newNode.item) < 0) {  // move iterator to the position before the element bigger than newNode     current.next.item < newNode.item
                 if (current.next.next == null) {        // if at the end of the queue
                     current.next.next = newNode;        // place the new node there
                     newNode.next = null;
@@ -114,7 +114,7 @@ public class QueueOrdered implements Iterable<Integer> {
      *
      * @param item
      */
-    public void enqueue(int item) {
+    public void enqueue(Item item) {
         if (isEmpty()) {            // if there are no elements
             first = new Node();     // create a new node
             first.item = item;      // store information
@@ -131,9 +131,9 @@ public class QueueOrdered implements Iterable<Integer> {
      *
      * @return The first element in the queue
      */
-    public int dequeue() {
+    public Item dequeue() {
         if (isEmpty()) throw new NoSuchElementException("Queue is empty");
-        int item = first.item;                      // item to be returned
+        Item item = first.item;                      // item to be returned
         first = first.next;                         // new first
         decreaseSize();
         if (isEmpty()) last = null;                 // if nothing left, last is null
@@ -146,11 +146,11 @@ public class QueueOrdered implements Iterable<Integer> {
      * @param k The index to remove.
      * @return The item removed
      */
-    public int removeKth (int k) {
+    public Item removeKth (int k) {
         if (k > size() || k <= 0) {              // if index out of range
             throw new IndexOutOfBoundsException("No element at that index");
         }
-        int item = 0;                            // item to remove
+        Item item;                            // item to remove
         Node current = first;                    // for iterating over queue
         int index = size();                      // index starting at first counting backwards
 
@@ -179,7 +179,7 @@ public class QueueOrdered implements Iterable<Integer> {
     private void printContents() {
         StringBuilder sb = new StringBuilder(); // use a stringbuilder
         sb.append("Queue:");                   // make clear that the printout is for the queue
-        for (int item : this) {                 // use the iterator
+        for (Item item : this) {                 // use the iterator
             sb.append("  " + item);             // append each item
         }
         System.out.println(sb.toString());      // print to stdout
@@ -197,14 +197,14 @@ public class QueueOrdered implements Iterable<Integer> {
      * @return The iterator for the queue
      */
     @Override
-    public Iterator<Integer> iterator() {
+    public Iterator<Item> iterator() {
         return new QueueIterator(first);
     }
 
     /**
      * Iterator for this class
      */
-    private class QueueIterator implements Iterator<Integer> {
+    private class QueueIterator implements Iterator<Item> {
         private Node current;
 
         public QueueIterator (Node first) {
@@ -217,15 +217,15 @@ public class QueueOrdered implements Iterable<Integer> {
         }
 
         @Override
-        public Integer next() {
-            int item = current.item;
+        public Item next() {
+            Item item = current.item;
             current = current.next;
             return item;
         }
     }
 
     public static void main(String[] args) {
-        QueueOrdered q = new QueueOrdered();
+        QueueOrdered<Integer> q = new QueueOrdered();
 
         if (args.length > 0){
             if (args[0].equals("-t")) {
@@ -253,15 +253,14 @@ public class QueueOrdered implements Iterable<Integer> {
 
                 // dequeue test
                 output.reset();
-                int exp = -1;
-                int res = q.dequeue();
-                test.testResult(expected, result, "dequeue", "");
+                expected = "Queue:  10  15  20  100";
+                q.dequeue();
+                result = output.toString().trim();
+                test.testResult(expected, result, "dequeue", "The queue is not what is expected");
 
                 // removeKth test
                 output.reset();
-                exp = 15;
-                res = q.removeKth(3);
-                test.testResult(expected, result, "removeKth", "The returned value did not match expected return value.");
+                q.removeKth(3);
                 expected = "Queue:  10  20  100";
                 result = output.toString().trim();
                 test.testResult(expected, result, "removeKth", "The queue does not match expected output.");
