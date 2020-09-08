@@ -10,7 +10,8 @@
 *
 * **How it is used**
 *   To input elements to the queue, type in a string and press enter to
-*   enqueue.
+*   enqueue. To insert first, type "+" and press enter, then input the string
+*   you want to add.
 *   To dequeue, type "-". To remove first item, type "!". To remove
 *   last item, type "_".
 *

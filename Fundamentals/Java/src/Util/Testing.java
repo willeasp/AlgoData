@@ -16,7 +16,7 @@ public class Testing<Item> {
         if (errorMessage.length() > 0) {
             sb.append("\nErrorMessage: " + errorMessage);
         }
-        System.out.println(sb.toString());
+        System.err.println(sb.toString());
         System.exit(0);
     }
 
