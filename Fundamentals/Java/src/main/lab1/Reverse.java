@@ -1,4 +1,5 @@
-/*
+/*  Assignment 2
+*
 * Author: William Asp
 * September 1, 2020
 *
@@ -20,7 +21,7 @@
 *
 * */
 
-package lab1;
+package main.lab1;
 
 import edu.princeton.cs.algs4.Stack;
 

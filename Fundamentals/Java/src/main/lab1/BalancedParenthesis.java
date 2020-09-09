@@ -1,4 +1,4 @@
-/*
+/*  Higher Grade Assignment
 
 Author: William Asp
 September 8, 2020
@@ -15,13 +15,15 @@ Balanced Parenthesis
     were balanced or not.
 
 **Testing**
-    To run tests, add "-t" as program arguments before running.
+    To run tests, run BalancedParenthesisTest in test.lab1 package
 
 The program was not based on any outside source.
 
  */
 
-package lab1;
+package main.lab1;
+
+import com.sun.javaws.exceptions.InvalidArgumentException;
 
 import java.util.EmptyStackException;
 import java.util.Scanner;

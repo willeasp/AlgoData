@@ -1,4 +1,13 @@
-package Util;
+/*  Help class
+
+Author: William Asp
+September 8, 2020
+
+A class to help with testing using the main class.
+
+ */
+
+package main.Util;
 
 public class Testing<Item> {
     /**

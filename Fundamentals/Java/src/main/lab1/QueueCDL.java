@@ -1,4 +1,5 @@
-/*
+/*  Assignment 3
+*
 * Author: William Asp
 * September 3, 2020
 *
@@ -22,7 +23,7 @@
 *
 * */
 
-package lab1;
+package main.lab1;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

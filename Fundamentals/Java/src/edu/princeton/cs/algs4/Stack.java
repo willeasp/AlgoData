@@ -1,3 +1,7 @@
+/*  Assignment 2
+
+ */
+
 package edu.princeton.cs.algs4;
 
 import java.util.Iterator;
@@ -26,8 +30,8 @@ public class Stack<Item> implements Iterable<Item> {
 
     // helper linked list class
     private static class Node<Item> {
-        private Item item;
-        private Node<Item> next;
+        private Item item;              // item stored in stack
+        private Node<Item> next;        // points to next element in stack
     }
 
     /**
@@ -62,11 +66,11 @@ public class Stack<Item> implements Iterable<Item> {
      * @param  item the item to add
      */
     public void push(Item item) {
-        Node<Item> oldfirst = first;
-        first = new Node<Item>();
-        first.item = item;
-        first.next = oldfirst;
-        n++;
+        Node<Item> oldfirst = first;                // store old first
+        first = new Node<Item>();                   // create the new node and point first to it
+        first.item = item;                          // store information
+        first.next = oldfirst;                      // point to old first
+        n++;                                        // increase size
     }
 
     /**
@@ -76,11 +80,11 @@ public class Stack<Item> implements Iterable<Item> {
      * @throws NoSuchElementException if this stack is empty
      */
     public Item pop() {
-        if (isEmpty()) throw new NoSuchElementException("Stack underflow");
-        Item item = first.item;        // save item to return
-        first = first.next;            // delete first node
-        n--;
-        return item;                   // return the saved item
+        if (isEmpty()) throw new NoSuchElementException("Stack underflow");     // if stack is empty
+        Item item = first.item;                     // save item to return
+        first = first.next;                         // delete first node / move to next node in stack
+        n--;                                        // decrease size
+        return item;                                // return the saved item
     }
 
 
@@ -125,21 +129,21 @@ public class Stack<Item> implements Iterable<Item> {
 
         public LinkedIterator(Node<Item> first) {
             current = first;
-        }
+        }           // point current to first
 
         public boolean hasNext() {
             return current != null;
-        }
+        }                   // if current is null, no more elements left
 
         public void remove() {
             throw new UnsupportedOperationException();
-        }
+        }   // not used
 
         public Item next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            Item item = current.item;
-            current = current.next;
-            return item;
+            if (!hasNext()) throw new NoSuchElementException();               // if there are no elements
+            Item item = current.item;                                         // item to return
+            current = current.next;                                           // move to next item
+            return item;                                                      // return item
         }
     }
 
