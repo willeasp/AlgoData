@@ -2,3 +2,5 @@
 *.iml
 test.*
 out/
+*.txt
+*.py

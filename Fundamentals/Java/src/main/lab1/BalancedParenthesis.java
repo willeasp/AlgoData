@@ -46,6 +46,7 @@ public class BalancedParenthesis {
     }
 
     public boolean balanced (String parentheses) {
+        stack.clear();
         char expected;
         for(int i = 0; i < parentheses.length(); i++) {
             char c = parentheses.charAt(i);
