@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MergeSort<T extends Comparable> {
-    private int cutoff;
+    private int cutoff = 0;
     private InsertionSort insertionSort = new InsertionSort();
 
     public void setCutoff (int cutoff) {
@@ -93,8 +93,8 @@ public class MergeSort<T extends Comparable> {
             array[i] = sc.nextInt();
         }
 
-        System.out.println(Arrays.toString(array));
+        //System.out.println(Arrays.toString(array));
         merge.sort(array);
-        System.out.println(Arrays.toString(array));
+        //System.out.println(Arrays.toString(array));
     }
 }

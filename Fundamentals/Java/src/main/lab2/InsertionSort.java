@@ -64,6 +64,12 @@ public class InsertionSort<T extends Comparable> {
         return a < b;
     }
 
+    /**
+     * swaps a[j] and a[k]
+     * @param a
+     * @param j
+     * @param k
+     */
     private void swap (int[] a, int j, int k) {
         int tmp = a[j];
         a[j] = a[k];
@@ -114,18 +120,32 @@ public class InsertionSort<T extends Comparable> {
         Integer[] array = new Integer[0];
 
         if (args.length > 0) {
-            if (args[0].equals("-r")) {
-                int N = Integer.parseInt(args[1]);
+            if (args[0].equals("-f")) {      // fast
+                // input from user
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter size of input:");
+                int N = sc.nextInt();
+                int[] a = new int[N];
+                System.out.println("Enter " + N + " numbers.");
+                for(int i = 0; i < N; i++) {
+                    a[i] = sc.nextInt();
+                }
+                insertionsort.cleanSort(a, 0, a.length-1);
+                //System.out.println(Arrays.toString(a));
+                System.exit(0);
+
+            } else if (args[0].equals("-r")) {      // random
+                int N = Integer.parseInt(args[1]);  // number of random numbers
 
                 // generate random array
                 array = new Integer[N];
                 Random rd = new Random();
                 for (int i = 0; i < N; i++) {
-                    array[i] = rd.nextInt(20);
+                    array[i] = rd.nextInt(50);
                 }
                 System.out.println(Arrays.toString(array));
             }
-        } else {
+        }  else {
             // input from user
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter size of input:");
@@ -136,6 +156,7 @@ public class InsertionSort<T extends Comparable> {
                 array[i] = sc.nextInt();
             }
         }
+
         // count inversion
         insertionsort.countInversions(array);
 
