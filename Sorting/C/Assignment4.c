@@ -12,14 +12,19 @@
 
     **How it works**
         The program will prompt for the number of inputs to add,
-        then it will prompt for the integers to store.
+        then it will prompt for the integers to sort.
         The program will then move all negative numbers so that
         all negative numbers comes before the positive and 
         print the result.
 
+    **Testing**
+        Run file with -t as argument
+
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // swaps the elements at index i and j in array a
 void swap ( int a[], int i, int j ) {
@@ -45,7 +50,25 @@ void negativeBeforePositiveSort ( int a[], int size ) {
     }
 }
 
-int main( void ) {
+static void test ( void ) {
+    int a[] = {-2, 5, -7, 4, -11, 3, 6, -8, -9, -1};
+    negativeBeforePositiveSort(a, 10);
+    for(int i = 0; i < 10; i++) {
+        if (a[i] > 0 && a[i + 1] < 0) {
+            printf("Test failed.");
+            exit(0);
+        }
+    }
+    printf("Test successful.");
+}
+
+int main( int argc, char* argv[] ) {
+    if (argc > 1) {
+        if (strcmp(argv[1], "-t") == 0) {
+            test();
+            exit(0);
+        }
+    }
     // prompt user
     printf("How many numbers do you want to sort?\n");
     int N;
