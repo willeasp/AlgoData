@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Leipzig {
+public class CommonWords {
     private HashMap<Integer, String> hashMap;
     private BST<String, Integer> ST;
     private Scanner sc;             // user input
@@ -40,7 +40,7 @@ public class Leipzig {
         }
     }
 
-    public void leipZig (InputStream input) {
+    public void commonWords (InputStream input) {
         System.out.println("Reading file ...");
         long start = System.nanoTime();
         ST = load(input);
@@ -143,8 +143,7 @@ public class Leipzig {
 
         String fileName = "C:\\Users\\Dell\\Documents\\Code\\KTH\\Algoritmer och Datastrukturer\\Searching\\filter.txt";
         InputStream input = new FileInputStream(fileName);
-        Leipzig l = new Leipzig();
-        l.leipZig(input);
-
+        CommonWords commonWords = new CommonWords();
+        commonWords.commonWords(input);
     }
 }
