@@ -7,7 +7,7 @@ public class HashMap<Key, Value> {
     private int capacity;          // number of buckets in hashmap
     private LinkedList<Node>[] buckets;
 
-    private class Node{
+    private class Node {
         public Key key;
         public Value val;
 
