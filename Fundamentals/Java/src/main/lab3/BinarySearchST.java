@@ -1,7 +1,23 @@
+/*
+    Author: William Asp
+    September 28, 2020
+
+    **What it is**
+        A binary searchtree implemented as two arrays holding
+        keys and values. The keys corresponding value sits
+        at the same index.
+
+    **How it is used**
+        Run the program and enter words that will be used as keys.
+        The value for each word will be the number of words in the ST
+        when the key was added.
+
+    **Testing**
+        Run the file with the -ea flag.
+ */
+
 package main.lab3;
 
-
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -212,6 +228,4 @@ public class BinarySearchST <Key extends Comparable<Key>, Value> implements Sear
         }
         System.out.println(st.toString());
     }
-
-
 }

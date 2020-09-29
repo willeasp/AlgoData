@@ -3,7 +3,6 @@ package edu.princeton.cs.algs4;
 import main.lab3.BinarySearchST;
 import main.lab3.SearchTree;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -18,12 +17,21 @@ import java.util.Scanner;
  *
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
+ *
+ *  Edited by William Asp for testing purposes
  */
 public class FrequencyCounter {
 
     // Do not instantiate.
     private FrequencyCounter() { }
 
+    /**
+     * Reads in a command-line integer and sequence of words from
+     * standard input. Edited to not print anything to get better
+     * output when measuring many running times sequentially.
+     *
+     * @param args the command-line arguments
+     */
     public static void frequencyCounter (String[] args, SearchTree<String, Integer> ST, int N, InputStream stream) {
         int distinct = 0, words = 0;
         int minlen = Integer.parseInt(args[0]);

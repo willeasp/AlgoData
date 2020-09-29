@@ -1,12 +1,18 @@
 package main.lab3;
 
-import java.util.LinkedList;
+import main.Util.LinkedList;
 
+/**
+ * A HashMap implementation for lab 3
+ * @param <Key>
+ * @param <Value>
+ */
 public class HashMap<Key, Value> {
     private int n;          // number of elements
     private int capacity;          // number of buckets in hashmap
     private LinkedList<Node>[] buckets;
 
+    // a node
     private class Node {
         public Key key;
         public Value val;
@@ -17,6 +23,10 @@ public class HashMap<Key, Value> {
         }
     }
 
+    /**
+     * Initiate hashmap with capacity
+     * @param capacity
+     */
     public HashMap (int capacity) {
         this.buckets = new LinkedList[capacity];
         this.n = 0;
@@ -27,6 +37,11 @@ public class HashMap<Key, Value> {
         return Math.abs(key.hashCode() % capacity);
     }
 
+    /**
+     * Put key-value pair in hashmap
+     * @param key
+     * @param val
+     */
     public void put( Key key, Value val ) {
         int index = hash(key);
         if(buckets[index] == null) buckets[index] = new LinkedList<>();
@@ -39,8 +54,14 @@ public class HashMap<Key, Value> {
         buckets[index].add(new Node(key, val));
     }
 
+    /**
+     * Get value from key in hashmap
+     * @param key
+     * @return Value
+     */
     public Value get (Key key) {
         int index = hash(key);
+        if( buckets[index] == null) return null;
         for(Node node : buckets[index]) {
             if(node.key.equals(key)) return node.val;
         }
@@ -63,6 +84,7 @@ public class HashMap<Key, Value> {
         return sb.toString();
     }
 
+    // tests
     public static void main (String[] args) {
         HashMap<Integer, String> hashMap = new HashMap(4);
         hashMap.put(5, "cool");
@@ -77,6 +99,7 @@ public class HashMap<Key, Value> {
         System.out.println(hashMap.get(9));
         System.out.println(hashMap.get(10));
         System.out.println(hashMap.get(6));
+        hashMap.get(200000);
     }
 
 

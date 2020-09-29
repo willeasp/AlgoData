@@ -12,13 +12,17 @@
 
     **Testing**
         Run the program with the -t flag, the expected output and real output is written 
-        tp stdout
+        to stdout. The file text.txt is needed for it to work.
+
 */
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
+/*
+    Filters a text from stdin to filter.txt, removes all characters except alphabetic, blank and newline.
+*/
 void filter ( void ) {
     FILE* fp;
     fp = fopen("filter.txt", "w");
@@ -32,7 +36,9 @@ void filter ( void ) {
     fclose(fp);
 }
 
-
+/*
+    Test for the file, expected and real output is written to stdout.
+*/
 static void test ( void ) {
     FILE* fp;
     fp = fopen("test.txt", "r");

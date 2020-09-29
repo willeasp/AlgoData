@@ -1,5 +1,17 @@
-package main.lab3;
+/*
+    Author: William Asp
+    September 28, 2020
 
+    **What it is**
+        Program that will test different properties of the
+        hashcode() function.
+
+    **How it is used**
+        Choose what test to run in the main function then compile and
+        run.
+ */
+
+package main.lab3;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,18 +30,41 @@ public class Assignment3 {
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
 
+    /**
+     * Hashes the key according to built in hashCode()
+     * @param key
+     * @return The built in hashCode() for the key
+     */
     static int hashHash(Object key) {
         return key.hashCode();
     }
 
+    /**
+     * Hashmap.java built in indexing function
+     * @param hash hashCode to be indexed
+     * @param n number of indexes to choose from
+     * @return index
+     */
     static int hashMapIndex(int hash, int n) {
         return (n-1 & hash);
     }
 
+    /**
+     * Simple indexing function using modulo
+     * @param hash To be indexed
+     * @param n number of indexes to choose from
+     * @return index
+     */
     static int moduloIndex(int hash, int n) {
         return Math.abs(hash % n);
     }
 
+    /**
+     * Check the balance a hashmap produces over a determined size array
+     * @param n size of array
+     * @param input different elements to hash
+     * @return an array of number of elements per index
+     */
     private static int[] hashMapIndexBalance(int n, SearchTree<String, Integer> input) {
         int[] buckets = new int[n];
         int index = 0;
@@ -40,6 +75,12 @@ public class Assignment3 {
         return buckets;
     }
 
+    /**
+     * Check the balance a simple hashcode and modulo indexing produces over a determined size array
+     * @param n size of array
+     * @param input different elements to hash
+     * @return an array of number of elements per index
+     */
     private static int[] hashModuloIndexBalance(int n, SearchTree<String, Integer> input) {
         int[] buckets = new int[n];
         int index = 0;
@@ -50,6 +91,11 @@ public class Assignment3 {
         return buckets;
     }
 
+    /**
+     * read a textfiles words into a BST
+     * @param input textfile
+     * @return the BST loaded with all words
+     */
     private static BST load (InputStream input) {
         BST<String, Integer> ST = new BST();
         Scanner sc = new Scanner(input);
@@ -66,6 +112,11 @@ public class Assignment3 {
         return ST;
     }
 
+    /**
+     * Loads a files words and makes their keys the words hash.
+     * @param input a textfile
+     * @return The BST with words as keys and hashes as values
+     */
     private static BST loadHashes (InputStream input) {
         BST<String, Integer> ST = new BST();
         Scanner sc = new Scanner(input);
@@ -77,6 +128,12 @@ public class Assignment3 {
         return ST;
     }
 
+    /**
+     * Tests the "index balance" for HashMaps indexing and a regular
+     * hashCode() and modulo indexing.
+     * @param input textfile
+     * @param n size of hashmap
+     */
     private static void hashIndexBalanceTest(InputStream input, int n) {
         BST ST = load(input);
         int[] hashMapBalance = hashMapIndexBalance(n, ST);
@@ -86,6 +143,10 @@ public class Assignment3 {
         }
     }
 
+    /**
+     * Check what hashCode() duplicates there are in text input
+     * @param input textfile
+     */
     private static void hashCodeDuplicates (InputStream input) {
         BST<String, Integer> words = loadHashes(input);
         BST<Integer, Integer> hashes = new BST();
@@ -109,6 +170,10 @@ public class Assignment3 {
         System.out.println(count);
     }
 
+    /**
+     * Get all hashCodes from input printed to the screen, sorted
+     * @param input textfile
+     */
     private static void hashCodeDistribution (InputStream input) {
         BST<String, Integer> ST = loadHashes(input);
         LinkedList<Integer> hashes = new LinkedList();
@@ -124,11 +189,15 @@ public class Assignment3 {
         System.out.println(count);
     }
 
+    /**
+     * Choose what test to run, then compile and run.
+     * @throws FileNotFoundException if there is no such file
+     */
     public static void main(String[] args) throws FileNotFoundException {
-        String fileName = "C:\\Users\\Dell\\Documents\\Code\\KTH\\Algoritmer och Datastrukturer\\Searching\\filter.txt";
+        String fileName = "C:\\Users\\Dell\\Documents\\Code\\KTH\\Algoritmer och Datastrukturer\\Searching\\theTextFilter.txt";
         InputStream input = new FileInputStream(fileName);
-        //hashIndexBalanceTest(input, 32);
+        hashIndexBalanceTest(input, 64);
         //hashCodeDuplicates(input);
-        hashCodeDistribution(input);
+        //hashCodeDistribution(input);
     }
 }

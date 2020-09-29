@@ -1,3 +1,21 @@
+/*
+    Author: William Asp
+    September 28, 2020
+
+    **What it is**
+        A binary searchtree implemented as a linked tree of nodes with
+        each node referencing two children. Each node is bigger than
+        its left relative node and smaller than its right relative node.
+
+    **How it is used**
+        Run the program and enter words that will be used as keys.
+        The value for each word will be the number of words in the ST
+        when the key was added.
+
+    **Testing**
+        Run the file with the -ea flag.
+ */
+
 package main.lab3;
 
 import edu.princeton.cs.algs4.Stack;
@@ -125,6 +143,10 @@ public class BST<Key extends Comparable<Key>, Value> implements Iterable<Key>, S
         return x;
     }
 
+    /**
+     * @param x start Node
+     * @return The smallest reachable node from x
+     */
     private Node min(Node x) {
         if (x.left == null) return x;
         else                return min(x.left);
@@ -154,30 +176,26 @@ public class BST<Key extends Comparable<Key>, Value> implements Iterable<Key>, S
         return get(key) != null;
     }
 
-  /*  @Override
+    @Override
     public String toString() {
-        return toString(root);
-    }
-    private String toString (Node x) {
-        if (x.left == null) {
-            if (x.right == null)
-                return x.key + " : " + x.val + "\n";
-            else
-                return toString(x.right);
+        StringBuilder sb = new StringBuilder();
+        for(Key s : this) {
+            sb.append(s + " : " + this.get(s) + "\n");
         }
-        String string = toString(x.left);
-        string = string + x.key + " : " + x.val + "\n";
-        string = string + toString(x.right);
-        return string;
-    }*/
+        return sb.toString();
+    }
 
-
-
+    /**
+     * @return An iterator for this class
+     */
     @Override
     public Iterator<Key> iterator() {
         return new BSTIterator(root);
     }
 
+    /**
+     * Iterate from smallest to biggest
+     */
     private class BSTIterator implements Iterator<Key>{
         private Node node;
         private Stack<Node> stack;
@@ -256,8 +274,6 @@ public class BST<Key extends Comparable<Key>, Value> implements Iterable<Key>, S
             String key = sc.next();
             st.put(key, i++);
         }
-        for(String s : st) {
-            System.out.println(s);
-        }
+        System.out.println(st.toString());
     }
 }
