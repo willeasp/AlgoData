@@ -27,7 +27,8 @@
 
 package main.lab3;
 
-import main.Util.LinkedList;
+import main.util.HashMap;
+import main.util.LinkedList;
 
 import java.io.*;
 import java.util.Scanner;

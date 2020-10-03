@@ -3,7 +3,7 @@
     October 2, 2020
 
     **What it is**
-        A depth first search algorithm, with an
+        A breadth first search algorithm, with an
         enhanced API that let's the user get results using
         symbols directly.
 
@@ -15,18 +15,20 @@
 package main.lab4;
 
 import edu.princeton.cs.algs4.Stack;
+import main.lab1.QueueIRFL;
 import main.util.LinkedList;
 
 import java.io.File;
 import java.io.FileWriter;
 
 /**
- * A depth first search class, with API support for SymbolGraph.
+ * A breadth first search class, with API support for SymbolGraph.
  * @param <Vertex>
  */
-public class DFS<Vertex> implements Search<Vertex>{
+public class BFS<Vertex> implements Search<Vertex>{
     private boolean[] marked;
     private int[] from;
+    private int[] distTo;
     private final int source;
     private final int V;
     private SymbolGraph<Vertex> SG;
@@ -36,7 +38,7 @@ public class DFS<Vertex> implements Search<Vertex>{
      * @param SG Symbolgraph to search
      * @param source vertex to search from
      */
-    public DFS(SymbolGraph<Vertex> SG, Vertex source) {
+    public BFS (SymbolGraph<Vertex> SG, Vertex source) {
         this(SG.G(), SG.indexOf(source));
         this.SG = SG;
     }
@@ -46,22 +48,34 @@ public class DFS<Vertex> implements Search<Vertex>{
      * @param G Graph to search in
      * @param source vertex to search from
      */
-    public DFS (Graphable G, int source) {
+    public BFS (Graphable G, int source) {
         this.V = G.V();
         validateVertex(source);
         this.source = source;
         from = new int[V];
         marked = new boolean[V];
-        dfs(G, source);
+        distTo = new int[V];
+        bfs(G, source);
     }
 
     // breadth first search algorithm
-    private void dfs(Graphable G, int v) {
-        marked[v] = true;
-        for(int w : G.adj(v)) {
-            if(!marked[w]){
-                from[w] = v;
-                dfs(G, w);
+    private void bfs(Graphable G, int s) {
+        QueueIRFL<Integer> queue = new QueueIRFL<Integer>();
+        for (int v = 0; v < G.V(); v++)
+            distTo[v] = -1;
+        distTo[s] = 0;
+        marked[s] = true;
+        queue.enqueue(s);
+
+        while(!queue.isEmpty()) {
+            int v = queue.dequeue();
+            for(int w : G.adj(v)) {
+                if (! marked[w]){
+                    from[w] = v;
+                    distTo[w] = distTo[v] + 1;
+                    marked[w] = true;
+                    queue.enqueue(w);
+                }
             }
         }
     }
@@ -87,6 +101,25 @@ public class DFS<Vertex> implements Search<Vertex>{
     }
 
     /**
+     * Distance from source to v
+     * @param v vertex
+     * @return the number of vertices to traverse to get to v
+     */
+    public int distTo(int v) {
+        validateVertex(v);
+        return distTo[v];
+    }
+
+    /**
+     * Distance from source to v
+     * @param vertex vertex
+     * @return the number of vertices to traverse to get to vertex
+     */
+    public int distTo(Vertex vertex) {
+        return distTo(SG.indexOf(vertex));
+    }
+
+    /**
      *
      * @param v destination
      * @return an iterable of all vertices to traverse to get to v.
@@ -94,11 +127,12 @@ public class DFS<Vertex> implements Search<Vertex>{
     public Iterable<Integer> pathTo(int v) {
         validateVertex(v);
         if(!hasPathTo(v)) return null;
-        Stack<Integer> path= new Stack();
-        for(int x = v; x != source; x = from[x]) {
+        Stack<Integer> path= new Stack<Integer>();
+        int x;
+        for(x = v; distTo[x] != 0; x = from[x]) {
             path.push(x);
         }
-        path.push(source);
+        path.push(x);
         return path;
     }
 
@@ -109,8 +143,8 @@ public class DFS<Vertex> implements Search<Vertex>{
      */
     public Iterable<Vertex> pathTo(Vertex vertex) {
         validateVertex(vertex);
-        LinkedList<Vertex> list = new LinkedList();
-        if(!hasPathTo(SG.indexOf(vertex))) return null;
+        LinkedList<Vertex> list = new LinkedList<Vertex>();
+        if(!hasPathTo(vertex)) return null;
         for(Integer v : pathTo(SG.indexOf(vertex))) {
             list.add(SG.nameOf(v));
         }
@@ -170,7 +204,7 @@ public class DFS<Vertex> implements Search<Vertex>{
         }
         System.out.println(sg.toString());
         System.out.println(sg.G().toString());
-        DFS<String> search1 = new DFS(sg, "AZ");
+        BFS<String> search1 = new BFS(sg, "AZ");
         for(String s : search1.pathTo("UT"))
             System.out.print(s + " -> ");
         file.delete();

@@ -1,6 +1,12 @@
-package main.lab3;
+/*
+    Author: William Asp
+    October 2, 2020
 
-import main.Util.LinkedList;
+    A regular hashmap implementation that supports
+    resizeing.
+ */
+
+package main.util;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -70,7 +76,7 @@ public class HashMap<Key, Value> implements Iterable<Key> {
     }
 
     private void resize (int newCapacity) {
-        System.out.println("Resizeing HashMap ... Old capacity is: " + this.capacity);
+        //System.out.println("Resizeing HashMap ... Old capacity is: " + this.capacity);
         LinkedList<Node>[] newBuckets = new LinkedList[newCapacity];
         int index;
         for( LinkedList<Node> list : buckets ) {
@@ -82,7 +88,7 @@ public class HashMap<Key, Value> implements Iterable<Key> {
         }
         buckets = newBuckets;
         capacity = newCapacity;
-        System.out.println("Resizeing done ... New size is: " + newCapacity);
+        //System.out.println("Resizeing done ... New size is: " + newCapacity);
     }
 
     private double loadFactor() {
@@ -101,6 +107,14 @@ public class HashMap<Key, Value> implements Iterable<Key> {
             if(node.key.equals(key)) return node.val;
         }
         return null;
+    }
+
+    /**
+     * @param key
+     * @return true if the hashmap contains the given key
+     */
+    public boolean contains (Key key) {
+        return this.get(key) != null;
     }
 
     /**

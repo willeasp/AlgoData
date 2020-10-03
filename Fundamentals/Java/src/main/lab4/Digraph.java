@@ -3,7 +3,7 @@
     October 2, 2020
 
     **What it is**
-        An undirected graph.
+        A directed graph.
 
     **How it works**
         Run the file to test a few vertices connection.
@@ -14,18 +14,18 @@ package main.lab4;
 import main.util.LinkedList;
 
 /**
- * An undirected graph
+ * A directional graph
  */
-public class Graph implements Graphable {
+public class Digraph implements Graphable {
     private LinkedList<Integer>[] adj;      // bags of adjecent vertices
     private final int V;                    // number of vertices
     private int E;                          // number of edges
 
     /**
-     * Initiate an empty graph of V vertices
+     * Initiate an empty Digraph of V vertices
      * @param V
      */
-    public Graph(int V) {
+    public Digraph(int V) {
         if ( V < 0 ) throw new IllegalArgumentException("Number of vertices cannot be negative");
         this.V = V;
         this.E = 0;
@@ -41,7 +41,7 @@ public class Graph implements Graphable {
      */
     @Override
     public int V() {
-        return V;
+        return this.V;
     }
 
     /**
@@ -50,22 +50,19 @@ public class Graph implements Graphable {
      */
     @Override
     public int E() {
-        return E;
+        return this.E;
     }
 
     /**
-     * Add an undirected edge between v and w.
+     * Add an directed edge between v and w.
      * Does not check if the edge already exists.
-     * @param v first vertex
-     * @param w second vertex
+     * @param v source vertex
+     * @param w destination vertex
      */
     @Override
     public void addEdge(int v, int w) {
-        validateVertex(v);
-        validateVertex(w);
         E++;
         adj[v].add(w);
-        adj[w].add(v);
     }
 
     /**
@@ -75,7 +72,6 @@ public class Graph implements Graphable {
      */
     @Override
     public Iterable<Integer> adj(int v) {
-        validateVertex(v);
         return adj[v];
     }
 
@@ -87,12 +83,6 @@ public class Graph implements Graphable {
     @Override
     public int degree(int v) {
         return adj[v].size();
-    }
-
-    // throws IllegalArgumentException if v is outside graph range
-    private void validateVertex(int v) {
-        if(v < 0 || v >= V)
-            throw new IllegalArgumentException("vertex " + v + " is not between 0 and " + (V-1));
     }
 
     /**
@@ -114,7 +104,7 @@ public class Graph implements Graphable {
     }
 
     public static void main(String[] args) {
-        Graph G = new Graph(4);
+        Digraph G = new Digraph(4);
         G.addEdge(0,1);
         G.addEdge(1, 2);
         G.addEdge(2, 3);

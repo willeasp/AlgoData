@@ -77,7 +77,7 @@ public class QueueIRFL<Item> implements Iterable<Item> {
     public void enqueue (Item item) {
         last = insert(item);                // the newly inserted element is the new last
         increaseSize();
-        printContents();
+        //printContents();
     }
 
     /**
@@ -122,7 +122,7 @@ public class QueueIRFL<Item> implements Iterable<Item> {
             first = first.next;
         }
         decreaseSize();
-        printContents();
+        //printContents();
         return item;
     }
 
@@ -173,7 +173,7 @@ public class QueueIRFL<Item> implements Iterable<Item> {
      *
      * @return True if there are 0 elements in the queue
      */
-    private boolean isEmpty() { return n == 0;  }
+    public boolean isEmpty() { return n == 0;  }
 
     /**
      * Returns an Iterator for the Class

@@ -28,7 +28,7 @@ The program has taken inspiration from the Queue.java found at https://algs4.cs.
 
 package main.lab1;
 
-import main.Util.Testing;
+import main.util.Testing;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

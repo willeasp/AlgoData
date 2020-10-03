@@ -7,7 +7,7 @@ A class to help with testing using the main class.
 
  */
 
-package main.Util;
+package main.util;
 
 public class Testing<Item> {
     /**
