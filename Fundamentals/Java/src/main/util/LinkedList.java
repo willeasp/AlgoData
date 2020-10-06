@@ -26,9 +26,22 @@ public class LinkedList<Item> implements Iterable<Item> {
     public LinkedList() {
         this.first = null;
         this.last = first;
+        this.size = 0;
     }
 
-    // add element to the last place in list
+    /**
+     * Constructor from already existing linkedlist
+     * @param old
+     */
+    public LinkedList(LinkedList<Item> old) {
+        for (Item item : old) {
+            this.add(item);
+        }
+    }
+
+    /**
+     * add element to the last place in list
+     */
     public void add (Item item) {
         Node newNode = new Node(item);
         if (this.last == null); // just make last newNode
@@ -36,6 +49,18 @@ public class LinkedList<Item> implements Iterable<Item> {
             this.last.next = newNode;
         this.last = newNode;
         if(first == null) first = last;
+        size++;
+    }
+
+    /**
+     * Add element to the beginning of the list
+     * @param item
+     */
+    public void addFirst(Item item) {
+        Node newNode = new Node(item);
+        newNode.next = first;
+        this.first = newNode;
+        size++;
     }
 
     /**
@@ -44,6 +69,17 @@ public class LinkedList<Item> implements Iterable<Item> {
      */
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for(Item item : this) {
+            sb.append(item.toString() + ", ");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     /**

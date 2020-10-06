@@ -1,3 +1,28 @@
+/*
+    Author: William Asp
+    October 2, 2020
+
+    **What it is**
+        A generic SymbolGraph that can be both directed and not.
+
+    **How it works**
+        The graph reads input from an Iterable over Vertex arrays.
+        Each vertex in each array in the Iterable the graph considers to be edged together.
+        The class may be good to extend to make a type graph that handles the making of
+        the input Iterable.
+
+        The SymbolGraph can be both directed and directed.
+        The SymbolGraph defaults to being undirected.
+        The third argument of the constructor (boolean directed) determines
+        if the SymbolGraph is to be directed or not.
+        directed = true => directed SymbolGraph
+        directed = false => undirected SymbolGraph
+
+    **Testing**
+        Run program to test for a small graph.
+
+ */
+
 package main.lab4;
 
 import main.util.LinkedList;

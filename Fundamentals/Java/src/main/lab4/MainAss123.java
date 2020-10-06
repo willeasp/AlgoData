@@ -51,10 +51,10 @@ import java.util.Scanner;
  *            is chosen with the flag -d as program argument.
  */
 public class MainAss123 {
-    private StringGraph SG;
-    private Scanner sc;
-    private SearchFactory searchFactory;
-    private GraphFactory graphFactory;
+    private StringGraph SG;                 // The symbolgraph in use
+    private Scanner sc;                     // Scanner to use in program
+    private SearchFactory searchFactory;    // for getting search methods
+    private GraphFactory graphFactory;      // for getting directed or undirected graphs
 
     /**
      * Initiate program
@@ -64,12 +64,8 @@ public class MainAss123 {
      */
     public MainAss123(String fileName, String delimiter, boolean directed) {
         this.graphFactory = new GraphFactory(fileName, delimiter);
-        try {
-            setGraphType(directed);
-        } catch (FileNotFoundException e) {
-            System.out.println("Could not find file.");
-            e.printStackTrace();
-        }
+        setGraphType(directed);
+
         this.searchFactory = new SearchFactory();
         System.out.println(SG.toString());
         interactive();
@@ -86,17 +82,13 @@ public class MainAss123 {
         System.out.println("Enter 'XX to YY' to search for paths.");
         while(sc.hasNext()) {
             input = sc.nextLine().split(" to ");
-            if (input.length < 2) {
+            if (input.length < 2) {                         // if the input is a command
                 if(input[0].equals("")) continue;
-                if(input[0].equals("search")) {
+                if(input[0].equals("search")) {             // change search type
                     setSearchType();
                     continue;
-                } else if (input[0].equals("graph")) {
-                    try {
-                        setGraphType();
-                    } catch (FileNotFoundException e) {
-                        System.out.println("no such graph type");
-                    }
+                } else if (input[0].equals("graph")) {      // change the graph type
+                    setGraphType();
                     System.out.println(SG.toString());
                     continue;
                 } else {
@@ -163,7 +155,7 @@ public class MainAss123 {
     }
 
     // ask for a new graph type
-    private void setGraphType() throws FileNotFoundException {
+    private void setGraphType() {
         System.out.println("What graph type would you like to use?\n" +
                 "graph or digraph?");
         String type;
@@ -183,10 +175,15 @@ public class MainAss123 {
     }
 
     // load the new graph that is either directed or not
-    private void setGraphType(boolean directed) throws FileNotFoundException {
-        SG = graphFactory.getNewStringGraph(directed);
+    private void setGraphType(boolean directed) {
+        try {
+            SG = graphFactory.getNewStringGraph(directed);
+        } catch (FileNotFoundException e) {
+            System.out.println("could not read from file");
+        }
     }
 
+    // check that the vertex exists
     private void verifyVertex (String vertex) throws IllegalArgumentException {
         if (!SG.contains(vertex)) throw new IllegalArgumentException(vertex);
     }
@@ -195,8 +192,7 @@ public class MainAss123 {
     private class SearchFactory {
         private String defaultSearch;
 
-        public SearchFactory() {
-        }
+        public SearchFactory() { }
 
         public void setDefaultSearch (String defaultSearch) {
             this.defaultSearch = defaultSearch;

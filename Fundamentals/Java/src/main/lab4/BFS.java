@@ -62,7 +62,7 @@ public class BFS<Vertex> implements Search<Vertex>{
     private void bfs(Graphable G, int s) {
         QueueIRFL<Integer> queue = new QueueIRFL<Integer>();
         for (int v = 0; v < G.V(); v++)
-            distTo[v] = -1;
+            distTo[v] = Integer.MAX_VALUE;          // infinity
         distTo[s] = 0;
         marked[s] = true;
         queue.enqueue(s);
