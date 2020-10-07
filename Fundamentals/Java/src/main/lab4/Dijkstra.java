@@ -13,6 +13,22 @@
     **Testing**
         Run the main class to test searching a small graph
 
+    **Complexity of the algorithm**
+        To extract a vertex from the priority queue takes O(log V) time.
+        When there are V vertices in the graph, the queue may contain
+        V vertices. To pop each vertex from the queue will then totally
+        take O(V log V) time.
+
+        We must also consider the time spent in the function relax.
+        Relax is only called once per edge, and it might call insert() (O(log V)),
+        but there can be most V such calls per run = O(V log V).
+        Each edge is only handled once, and that takes O(E) time, but it
+        can also possibly call decreaseKey(), and that takes O(log V) time,
+        which adds up to O(E log V) time.
+
+        The total then adds up to O(2(V log V) + E log V) which is equal to
+        O(V log V + E log V). When assuming a fully connected graph, E = V^2,
+        so in the absolute worst case, the performance is O(V^2)
  */
 
 package main.lab4;
