@@ -23,7 +23,10 @@ import main.util.LinkedList;
 import java.io.*;
 import java.util.Scanner;
 
-public class StringGraph extends SymbolGraph{
+/**
+ * A symbolgraph extension for reading strings
+ */
+public class StringGraph extends SymbolGraph {
 
     /**
      * Create a new SymbolGraph that is undirected
@@ -83,6 +86,10 @@ public class StringGraph extends SymbolGraph{
         return verticeCounter.size();
     }
 
+    /**
+     * Unit tests
+     * @param args
+     */
     public static void main(String[] args) {
         String fileName = "test.txt";
         File file = new File(fileName);

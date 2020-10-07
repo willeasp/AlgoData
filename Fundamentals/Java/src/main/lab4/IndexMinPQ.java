@@ -1,11 +1,27 @@
+/*
+    Author: William Asp
+    October 7, 2020
+
+    **What it is**
+        A priority queue implemented as a binary heap
+        Used in dijkstra.
+
+    **How it works**
+        Run the program to test adding strings to the queue
+ */
+
 package main.lab4;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * A Priority queue implemented as a binary heap
+ * @param <Key>
+ */
 public class IndexMinPQ<Key extends Comparable> implements Iterable<Integer>{
-    private int maxN;
-    private int n;
+    private int maxN;           // max number of elements in pq
+    private int n;              // number of elements in priority queue
     private int[] pq;           // pq[0] holds the most prioritized index
     private int[] qp;           // pq[n] holds index n's place in pq
     private Key[] keys;         // keys[n] holds n's associated key

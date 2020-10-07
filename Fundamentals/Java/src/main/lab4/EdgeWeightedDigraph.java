@@ -1,3 +1,15 @@
+/*
+    Author: William Asp
+    October 7, 2020
+
+    **What it is**
+        A class to represent an edge weighted digraph
+
+    **How it works**
+        Run the program to manually enter edges and weights
+
+ */
+
 package main.lab4;
 
 import main.util.LinkedList;
@@ -6,6 +18,9 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.Scanner;
 
+/**
+ * A class to represent an edge-weighted digraph
+ */
 public class EdgeWeightedDigraph {
     private LinkedList<DirectedEdge>[] adj;
     private int V;
@@ -44,6 +59,10 @@ public class EdgeWeightedDigraph {
         }
     }
 
+    /**
+     * Create a copy of an EdgeWeightedDigraph
+     * @param old the one to copy
+     */
     public EdgeWeightedDigraph(EdgeWeightedDigraph old) {
         this.V = old.V();
         this.E = old.E();
@@ -131,8 +150,11 @@ public class EdgeWeightedDigraph {
         return sb.toString();
     }
 
-    // Test, user enter edges
+    /**
+     * Unit test
+     */
     public static void main(String[] args) {
+        // user get to enter edges
         InputStream in = System.in;
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(in);
         System.out.println(G);

@@ -169,6 +169,10 @@ public class BFS<Vertex> implements Search<Vertex>{
             throw new IllegalArgumentException("vertex " + v + " does not exist." );
     }
 
+    /**
+     * Unit tests the BFS
+     * @param args
+     */
     public static void main(String[] args) {
         String fileName = "test.txt";
         File file = new File(fileName);

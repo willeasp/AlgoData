@@ -1,5 +1,21 @@
+/*
+    Author: William Asp
+    October 7, 2020
+
+    **What it is**
+        A representation of an edge to use
+        in a graph
+
+    **How it works**
+        Run program to test creating an edge.
+
+ */
+
 package main.lab4;
 
+/**
+ * A class to represent a directed edge with a weight
+ */
 public class DirectedEdge {
     private int from;
     private int to;
@@ -57,6 +73,10 @@ public class DirectedEdge {
                 '}';
     }
 
+    /**
+     * Unit tests a DirectedEdge
+     * @param args
+     */
     public static void main(String[] args) {
         DirectedEdge e = new DirectedEdge(3, 4, 1000.5);
         System.out.println(e);

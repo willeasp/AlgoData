@@ -135,6 +135,10 @@ public class DFS<Vertex> implements Search<Vertex>{
             throw new IllegalArgumentException("vertex " + v + " does not exist." );
     }
 
+    /**
+     * Unit test the search
+     * @param args
+     */
     public static void main(String[] args) {
         String fileName = "test.txt";
         File file = new File(fileName);
@@ -166,7 +170,7 @@ public class DFS<Vertex> implements Search<Vertex>{
             fw.close();
             sg = new StringGraph(fileName, " ");
         } catch (Exception e) {
-            System.out.println("Could not fucking do the thing");
+            System.out.println("Could not do the thing");
         }
         System.out.println(sg.toString());
         System.out.println(sg.G().toString());

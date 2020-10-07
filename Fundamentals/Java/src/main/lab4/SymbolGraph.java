@@ -132,6 +132,10 @@ public class SymbolGraph<Vertex> {
         return sb.toString();
     }
 
+    /**
+     * Unit tests
+     * @param args
+     */
     public static void main(String[] args) {
         LinkedList<String[]> list = new LinkedList();
         list.add(new String[]{"korv", "bröd"});

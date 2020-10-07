@@ -1,12 +1,36 @@
+/*
+    Author: William Asp
+    October 7, 2020
+
+    **What it is**
+        A datastructure to find the single shortest
+        path in an edge-weighted digraph with non-negative weights.
+
+    **How it works**
+        The search is made using the constructor then one can
+        ask the class for the shortest path to a vertex.
+
+    **Testing**
+        Run the main class to test searching a small graph
+
+ */
+
 package main.lab4;
 
 import edu.princeton.cs.algs4.Stack;
 import main.util.LinkedList;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+/**
+ * This class represents a data type for solving the
+ * single-source shortest paths problem in edge-weighted digraphs
+ * where the edge weights are nonnegative.
+ *
+ * This implementation uses a binary heap as priority queue.
+ *
+ */
 public class Dijkstra {
     private DirectedEdge[] from;
     private double[] distTo;
@@ -44,12 +68,19 @@ public class Dijkstra {
         }
     }
 
+    /**
+     * Create a new search, with the path going from s
+     * to by. A vertice cannot be visited twice.
+     * @param G graph
+     * @param s source
+     */
     public Dijkstra(EdgeWeightedDigraph G, int s, int by) {
         for(DirectedEdge e : G.edges()) {
             if(e.weight() < 0)
                 throw new IllegalArgumentException("edge " + e + " hash negative weight");
         }
 
+        // create search from s to by
         distTo = new double[G.V()];
         from = new DirectedEdge[G.V()];
 
@@ -71,12 +102,14 @@ public class Dijkstra {
             }
         }
 
+        // save the path from s to by
         firstPath = new LinkedList();
         for(DirectedEdge edge : pathTo(by)) {
             byPath[edge.from()] = edge;
             firstPath.addFirst(edge);
         }
 
+        // create next search
         for(int i = 0; i < G.V(); i++) {
             distTo[i] = Double.POSITIVE_INFINITY;
             from[i] = null;
@@ -93,6 +126,7 @@ public class Dijkstra {
         from[s] = null;
     }
 
+    // relax an edge
     private void relax (DirectedEdge edge) {
         int source = edge.from(), dest = edge.to();
         if(distTo[dest] > distTo[source] + edge.weight()) {
@@ -104,6 +138,7 @@ public class Dijkstra {
         }
     }
 
+    // relax an edge if it is not already visited
     private void byRelax (DirectedEdge edge) {
         if (byPath[edge.from()] != edge){
             int source = edge.from(), dest = edge.to();
@@ -163,11 +198,18 @@ public class Dijkstra {
             throw new IllegalArgumentException("Vertex " + v + " is outside range");
     }
 
+    /**
+     * Unit tests the Dijkstra search
+     * @param args
+     * @throws FileNotFoundException
+     */
     public static void main(String[] args) throws FileNotFoundException {
         String fileName = "C:\\Users\\Dell\\Documents\\Code\\KTH\\Algoritmer och Datastrukturer\\Graphs\\tinyEWD.txt";
         InputStream input = new FileInputStream(fileName);
         EdgeWeightedDigraph G = new EdgeWeightedDigraph(input);
-        /*Dijkstra d = new Dijkstra(G, 4);
+
+        System.out.println("Single search");
+        Dijkstra d = new Dijkstra(G, 4);
         for (int i = 0; i < 8; i++) {
             System.out.println(4 + " to " + i);
             for(DirectedEdge edge : d.pathTo(i)) {
@@ -175,8 +217,9 @@ public class Dijkstra {
             }
             System.out.println();
             System.out.println(d.distTo(i));
-        }*/
+        }
 
+        System.out.println("\nTwo searches");
         Dijkstra dos = new Dijkstra(G, 3, 4);
         for(DirectedEdge edge : dos.pathTo(6)) {
             System.out.print(edge.from() + "->" + edge.to() + "  ");

@@ -103,6 +103,10 @@ public class Digraph implements Graphable {
         return sb.toString();
     }
 
+    /**
+     * Unit tests the graph
+     * @param args
+     */
     public static void main(String[] args) {
         Digraph G = new Digraph(4);
         G.addEdge(0,1);
